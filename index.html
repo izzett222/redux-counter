@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="count">0</div>
+     <button id="increase">increase</button>
+    <button id="decrease">decrease</button>
+    <script src="https://unpkg.com/redux@latest/dist/redux.min.js"></script>
+    <script>
+
+        const increase = document.getElementById("increase");
+        const decrease = document.getElementById("decrease");
+        const count = document.getElementById("count");
+        const initial = {
+            value: 0
+        }
+        const reducer = (state = initial, { type }) => {
+            switch (type) {
+                case "INCREMENT":
+                    return { ...state, value: state.value + 1 }
+                    break;
+                case "DECREMENT":
+                    return { ...state, value: state.value - 1 }
+                    break;
+                default:
+                    return { ...state }
+                    break;
+            }
+        }
+        const store = Redux.createStore(reducer);
+        const render = () => {
+            const state = store.getState()
+            count.textContent = state.value
+        }
+        store.subscribe(render)
+        increase.addEventListener("click", () => {
+            store.dispatch({ type: "INCREMENT" })
+        })
+        decrease.addEventListener("click", () => {
+            store.dispatch({ type: "DECREMENT" })
+        })
+    </script>
+</body>
+
+</html>
